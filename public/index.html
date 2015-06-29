@@ -1,0 +1,28 @@
+<html>
+<head>
+  <title>Tweets Recentes</title>
+</head>
+<body>
+<script type="text/javascript">
+var conn = new WebSocket('ws://localhost:8080/ws');
+
+conn.onopen = function() {
+  console.log('conectou!')
+}
+
+conn.onerror = function (error) {
+  console.log('WebSocket Error ' + error);
+};
+
+conn.onmessage = function(e) {
+  var el = document.getElementById('list');
+  var html = "<li>" + e.data + "</li>";
+
+  el.insertAdjacentHTML('afterBegin', html);
+}
+</script>
+  <h1>Tweets Recentes</h1>
+  <ul id="list">
+  </ul>
+</body>
+</html>
