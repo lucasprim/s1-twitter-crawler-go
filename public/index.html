@@ -4,6 +4,7 @@
 </head>
 <body>
 <script type="text/javascript">
+var counter = 0;
 var conn = new WebSocket('ws://localhost:8080/ws');
 
 conn.onopen = function() {
@@ -18,10 +19,26 @@ conn.onmessage = function(e) {
   var el = document.getElementById('list');
   var html = "<li>" + e.data + "</li>";
 
+  // Insert
   el.insertAdjacentHTML('afterBegin', html);
+
+  // Remove last child if there are more than 30 topics
+  var els;
+
+  while((els = el.getElementsByTagName('li')).length > 30) {
+    el.removeChild(els[els.length -1]);
+  }
+
+  // Counter
+  counter++;
+
+  document.getElementById('count').innerHTML = counter + '';
 }
 </script>
   <h1>Tweets Recentes</h1>
+  <p id="count" style="font-size:36px;font-weight:bold;">
+    0
+  </p>
   <ul id="list">
   </ul>
 </body>
